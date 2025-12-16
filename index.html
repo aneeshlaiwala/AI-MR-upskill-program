@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Skills Bootcamp for Market Researchers | insights3D</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --accent-cyan: #00f5ff;
+            --accent-magenta: #ff00aa;
+            --accent-purple: #8b5cf6;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-muted: rgba(255, 255, 255, 0.5);
+            --gradient-main: linear-gradient(135deg, #00f5ff 0%, #ff00aa 50%, #8b5cf6 100%);
+            --gradient-card: linear-gradient(135deg, rgba(0,245,255,0.1) 0%, rgba(255,0,170,0.05) 100%);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        .bg-animation {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(0, 245, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 0, 170, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(139, 92, 246, 0.05) 0%, transparent 40%);
+        }
+        .grid-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 245, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 245, 255, 0.03) 1px, transparent 1px);
+            background-size: 80px 80px;
+            z-index: -1;
+            opacity: 0.5;
+        }
+        nav {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(20px);
+            background: rgba(10, 10, 15, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .logo {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 1.5rem;
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .logo span { -webkit-text-fill-color: var(--text-muted); }
+        .nav-cta {
+            padding: 0.75rem 2rem;
+            background: var(--gradient-main);
+            border: none;
+            border-radius: 50px;
+            color: var(--bg-dark);
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(0, 245, 255, 0.3);
+        }
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 7rem 5% 3rem;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.5rem;
+            background: rgba(0, 245, 255, 0.1);
+            border: 1px solid rgba(0, 245, 255, 0.3);
+            border-radius: 50px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-cyan);
+            margin-bottom: 2rem;
+        }
+        .hero-badge::before {
+            content: '';
+            width: 8px; height: 8px;
+            background: var(--accent-cyan);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+        .hero h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+        .hero h1 .gradient-text {
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero h1 .outline-text {
+            -webkit-text-stroke: 2px var(--accent-cyan);
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-tagline {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.1rem;
+            color: var(--accent-magenta);
+            margin-bottom: 1.5rem;
+        }
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+        .hero-cta-group {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .btn-primary {
+            padding: 1.25rem 3rem;
+            background: var(--gradient-main);
+            border: none;
+            border-radius: 60px;
+            color: var(--bg-dark);
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(0, 245, 255, 0.4);
+        }
+        .btn-secondary {
+            padding: 1.25rem 3rem;
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 60px;
+            color: var(--text-primary);
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .btn-secondary:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+        .stats-strip {
+            padding: 2.5rem 5%;
+            background: linear-gradient(180deg, rgba(0,245,255,0.02) 0%, transparent 100%);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .stats-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            position: relative;
+        }
+        .stat-item::after {
+            content: '';
+            position: absolute;
+            right: 0; top: 50%;
+            transform: translateY(-50%);
+            width: 1px; height: 60%;
+            background: linear-gradient(180deg, transparent, rgba(0, 245, 255, 0.3), transparent);
+        }
+        .stat-item:last-child::after { display: none; }
+        .stat-number {
+            font-family: 'Syne', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+        .stat-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+        }
+        section {
+            padding: 4rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        .section-tag {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+            display: block;
+        }
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .section-subtitle {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .diff-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .diff-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 2.5rem;
+            transition: all 0.4s ease;
+        }
+        .diff-card:hover {
+            background: var(--gradient-card);
+            border-color: rgba(0, 245, 255, 0.2);
+            transform: translateY(-8px);
+        }
+        .diff-icon {
+            width: 60px; height: 60px;
+            background: linear-gradient(135deg, rgba(0,245,255,0.2) 0%, rgba(255,0,170,0.1) 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        .diff-card h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+        .diff-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        .learn-section {
+            background: linear-gradient(180deg, transparent 0%, rgba(139, 92, 246, 0.03) 50%, transparent 100%);
+        }
+        .learn-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1rem;
+        }
+        .learn-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.25rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: all 0.3s ease;
+        }
+        .learn-item:hover {
+            background: rgba(0, 245, 255, 0.03);
+            border-color: rgba(0, 245, 255, 0.15);
+        }
+        .learn-number {
+            width: 40px; height: 40px;
+            min-width: 40px;
+            background: var(--gradient-main);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--bg-dark);
+        }
+        .learn-content h4 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .learn-content p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        .structure-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        .structure-card {
+            background: var(--gradient-card);
+            border: 1px solid rgba(0, 245, 255, 0.2);
+            border-radius: 32px;
+            padding: 3rem;
+        }
+        .structure-highlight {
+            font-family: 'Syne', sans-serif;
+            font-size: 5rem;
+            font-weight: 800;
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+        .structure-highlight span {
+            font-size: 2rem;
+            display: block;
+            -webkit-text-fill-color: var(--text-secondary);
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+        .structure-features {
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .structure-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+        .structure-feature svg {
+            width: 20px; height: 20px;
+            stroke: var(--accent-cyan);
+        }
+        .structure-info h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        .structure-info p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        .audience-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        .audience-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+        .audience-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 245, 255, 0.3);
+        }
+        .audience-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .audience-card h4 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .outcomes-container {
+            background: linear-gradient(135deg, rgba(0,245,255,0.05) 0%, rgba(255,0,170,0.03) 50%, rgba(139,92,246,0.05) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 40px;
+            padding: 3rem;
+        }
+        .outcomes-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .outcomes-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+        .outcome-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        .outcome-check {
+            width: 32px; height: 32px;
+            min-width: 32px;
+            background: var(--accent-cyan);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .outcome-check svg {
+            width: 16px; height: 16px;
+            stroke: var(--bg-dark);
+            stroke-width: 3;
+        }
+        .outcome-item h4 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .outcome-item p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .cta-section {
+            text-align: center;
+            padding: 5rem 5%;
+            position: relative;
+        }
+        .cta-glow {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(0, 245, 255, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+        .cta-tagline {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--accent-magenta);
+            margin-bottom: 1.5rem;
+        }
+        .cta-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        .cta-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            max-width: 500px;
+            margin: 0 auto 2rem;
+        }
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 2rem;
+        }
+        .contact-email {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            color: var(--accent-cyan);
+            font-family: 'Space Mono', monospace;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .contact-email:hover {
+            background: rgba(0, 245, 255, 0.1);
+            border-color: var(--accent-cyan);
+        }
+        .contact-email svg {
+            width: 20px; height: 20px;
+        }
+        .contact-name {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .linkedin-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #0a66c2;
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            background: rgba(10, 102, 194, 0.1);
+            border: 1px solid rgba(10, 102, 194, 0.3);
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+        }
+        .linkedin-link:hover {
+            background: rgba(10, 102, 194, 0.2);
+            border-color: #0a66c2;
+            transform: translateY(-2px);
+        }
+        .linkedin-link svg {
+            width: 16px;
+            height: 16px;
+        }
+        .trainer-bio {
+            max-width: 700px;
+            margin: 1rem auto 0;
+            padding: 1.25rem 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            text-align: left;
+        }
+        footer {
+            padding: 2rem 5%;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+        }
+        .footer-brand {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+        .footer-brand span {
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .footer-tagline {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+        .footer-copy {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+        @media (max-width: 1024px) {
+            .structure-container { grid-template-columns: 1fr; gap: 2rem; }
+            .audience-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .stat-item:nth-child(2)::after { display: none; }
+            .audience-grid { grid-template-columns: 1fr; }
+            .outcomes-grid { grid-template-columns: 1fr; }
+            .learn-grid { grid-template-columns: 1fr; }
+            .hero-cta-group { flex-direction: column; align-items: center; }
+            nav { padding: 1rem 5%; }
+            .nav-cta { padding: 0.5rem 1rem; font-size: 0.75rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <div class="grid-overlay"></div>
+
+    <nav>
+        <div class="logo">insights<span>3D</span></div>
+        <a class="nav-cta" id="navEnroll">Enroll Now</a>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-badge">
+            <span>Live Training Program</span>
+        </div>
+        <h1>
+            <span class="gradient-text">AI Skills</span><br>
+            <span class="outline-text">Bootcamp</span>
+        </h1>
+        <p class="hero-tagline">🚀 Kick off 2026 with a mission to upskill — Program starts mid-January 2026</p>
+        <p class="hero-subtitle">
+            A hands-on, practical training program for market researchers ready to master AI in real research workflows
+        </p>
+        <div class="hero-cta-group">
+            <a class="btn-primary" id="heroEnroll">Start Your AI Journey</a>
+            <a href="#learn" class="btn-secondary">Explore Curriculum</a>
+        </div>
+    </section>
+
+    <div class="stats-strip">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">8</div>
+                <div class="stat-label">Week Program</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">90</div>
+                <div class="stat-label">Minutes Each</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Hands-On</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">∞</div>
+                <div class="stat-label">Reusable Assets</div>
+            </div>
+        </div>
+    </div>
+
+    <section id="about">
+        <div class="section-header">
+            <span class="section-tag">Why This Program</span>
+            <h2 class="section-title">Move Beyond AI Theory</h2>
+            <p class="section-subtitle">No more watching tutorials. Learn by doing with real datasets, proven prompts, and live demonstrations.</p>
+        </div>
+        <div class="diff-grid">
+            <div class="diff-card">
+                <div class="diff-icon">🎯</div>
+                <h3>Hands-On, Not Theoretical</h3>
+                <p>Every module includes live demonstrations and practical exercises you can apply immediately.</p>
+            </div>
+            <div class="diff-card">
+                <div class="diff-icon">📊</div>
+                <h3>Real-World Datasets</h3>
+                <p>Work with messy, realistic survey data — not sanitized examples that never reflect reality.</p>
+            </div>
+            <div class="diff-card">
+                <div class="diff-icon">🔄</div>
+                <h3>End-to-End Coverage</h3>
+                <p>From data prep to analysis, storytelling, and automation — master the complete workflow.</p>
+            </div>
+            <div class="diff-card">
+                <div class="diff-icon">📦</div>
+                <h3>Reusable Assets</h3>
+                <p>Take home prompts, playbooks, datasets, and workflows you can use on every project.</p>
+            </div>
+            <div class="diff-card">
+                <div class="diff-icon">💼</div>
+                <h3>For Working Professionals</h3>
+                <p>Immediately applicable to client and internal projects from day one.</p>
+            </div>
+            <div class="diff-card">
+                <div class="diff-icon">🚀</div>
+                <h3>Progressive Learning</h3>
+                <p>Build skills week by week with time to apply learnings between sessions.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="learn" class="learn-section">
+        <div class="section-header">
+            <span class="section-tag">Curriculum</span>
+            <h2 class="section-title">What You'll Master</h2>
+            <p class="section-subtitle">Comprehensive skills that transform how you approach market research</p>
+        </div>
+        <div class="learn-grid">
+            <div class="learn-item">
+                <div class="learn-number">01</div>
+                <div class="learn-content">
+                    <h4>Data Cleaning & Preparation</h4>
+                    <p>Use AI for data cleaning, prep, and synthetic data creation</p>
+                </div>
+            </div>
+            <div class="learn-item">
+                <div class="learn-number">02</div>
+                <div class="learn-content">
+                    <h4>Fraud Detection</h4>
+                    <p>Detect and manage fraudulent or low-quality responses using AI-driven checks</p>
+                </div>
+            </div>
+            <div class="learn-item">
+                <div class="learn-number">03</div>
+                <div class="learn-content">
+                    <h4>Open-End Analysis</h4>
+                    <p>Analyze qualitative data using AI for themes, sentiment, and insights</p>
+                </div>
+            </div>
+            <div class="learn-item">
+                <div class="learn-number">04</div>
+                <div class="learn-content">
+                    <h4>Quantitative Analysis</h4>
+                    <p>Conduct statistical analysis with intelligent AI assistance</p>
+                </div>
+            </div>
+            <div class="learn-item">
+                <div class="learn-number">05</div>
+                <div class="learn-content">
+                    <h4>Build AI Apps</h4>
+                    <p>Create ChatGPT-powered apps and dashboards without heavy coding</p>
+                </div>
+            </div>
+            <div class="learn-item">
+                <div class="learn-number">06</div>
+                <div class="learn-content">
+                    <h4>Prompt Engineering</h4>
+                    <p>Master prompting techniques specifically for market research use cases</p>
+                </div>
+            </div>
+            <div class="learn-item">
+                <div class="learn-number">07</div>
+                <div class="learn-content">
+                    <h4>AI Storytelling</h4>
+                    <p>Convert analysis into client-ready stories and executive summaries</p>
+                </div>
+            </div>
+            <div class="learn-item">
+                <div class="learn-number">08</div>
+                <div class="learn-content">
+                    <h4>Use AI to Build Presentations</h4>
+                    <p>Create stunning presentations using AI in minutes. No more spending hours adjusting font sizes and colors.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="structure">
+        <div class="structure-container">
+            <div class="structure-visual">
+                <div class="structure-card">
+                    <div class="structure-highlight">
+                        8
+                        <span>Week Program</span>
+                    </div>
+                    <div class="structure-features">
+                        <div class="structure-feature">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>Weekly live sessions</span>
+                        </div>
+                        <div class="structure-feature">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>90 minutes per session</span>
+                        </div>
+                        <div class="structure-feature">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>Step-by-step skill progression</span>
+                        </div>
+                        <div class="structure-feature">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>Live demos + Q&A every session</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="structure-info">
+                <h3>Designed for Your Schedule</h3>
+                <p>Weekly sessions allow you to build skills progressively and apply what you learn between classes. Each session is packed with live demonstrations, hands-on exercises, and dedicated Q&A time.</p>
+                <a class="btn-primary" id="reserveSpot">Reserve Your Spot</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="audience">
+        <div class="section-header">
+            <span class="section-tag">Who Should Join</span>
+            <h2 class="section-title">Built For Researchers Like You</h2>
+        </div>
+        <div class="audience-grid">
+            <div class="audience-card">
+                <div class="audience-icon">🔬</div>
+                <h4>Market Research Professionals</h4>
+            </div>
+            <div class="audience-card">
+                <div class="audience-icon">📈</div>
+                <h4>Entry Level Researchers</h4>
+            </div>
+            <div class="audience-card">
+                <div class="audience-icon">💡</div>
+                <h4>Insights & Strategy Teams</h4>
+            </div>
+            <div class="audience-card">
+                <div class="audience-icon">🎯</div>
+                <h4>CX and Brand Managers</h4>
+            </div>
+            <div class="audience-card">
+                <div class="audience-icon">🏢</div>
+                <h4>Research Agency Leaders</h4>
+            </div>
+            <div class="audience-card">
+                <div class="audience-icon">📊</div>
+                <h4>Analysts & Consultants</h4>
+            </div>
+        </div>
+    </section>
+
+    <section id="outcomes">
+        <div class="outcomes-container">
+            <h2 class="outcomes-title">What You'll Achieve</h2>
+            <div class="outcomes-grid">
+                <div class="outcome-item">
+                    <div class="outcome-check">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4>Reduce Manual Work</h4>
+                        <p>Cut time spent on repetitive research tasks dramatically</p>
+                    </div>
+                </div>
+                <div class="outcome-item">
+                    <div class="outcome-check">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4>Faster Insights Delivery</h4>
+                        <p>Improve speed and quality of insights generation</p>
+                    </div>
+                </div>
+                <div class="outcome-item">
+                    <div class="outcome-check">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4>Enhanced Research Outputs</h4>
+                        <p>Advanced analytics and automation capabilities</p>
+                    </div>
+                </div>
+                <div class="outcome-item">
+                    <div class="outcome-check">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4>Future-Proof Your Career</h4>
+                        <p>Stay relevant in an AI-driven research environment</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="enroll" class="cta-section">
+        <div class="cta-glow"></div>
+        <div class="cta-content">
+            <div class="cta-tagline">Don't Get Left Behind</div>
+            <h2 class="cta-title">Ready to Transform Your<br>Research Practice?</h2>
+            <p class="cta-subtitle">AI is rapidly changing how research is conducted. Equip yourself with practical, usable AI skills that directly enhance productivity and insight quality.</p>
+            <a class="btn-primary" id="registerInterest">Register Your Interest</a>
+            <div class="contact-info">
+                <a class="contact-email" id="emailLink">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                    <span id="emailText"></span>
+                </a>
+                <span class="contact-name">Aneesh Laiwala — Program Director</span>
+                <a href="https://www.linkedin.com/in/aneeshlaiwala/" target="_blank" class="linkedin-link">
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                    Connect on LinkedIn
+                </a>
+                <p class="trainer-bio">Aneesh brings over 25 years of experience in the market research industry, spanning data analytics, core research, platform innovation, and large-scale capability building. He has led multi-functional teams and designed cross-skilling programs that enabled researchers, analysts, and project managers to expand beyond their core roles. Over the past year, Aneesh has focused deeply on applying AI across the market research lifecycle, from questionnaire design to insight generation and reporting — developing innovative AI-driven tools that significantly improve efficiency, speed, and cost effectiveness.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-brand"><span>insights3D</span></div>
+        <p class="footer-tagline">Data-Driven. Digital. Decoded by AI.</p>
+        <p class="footer-copy">© 2025 insights3D. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Build email dynamically to prevent encoding issues
+        var emailUser = 'aneesh';
+        var emailDomain = 'insights3d.com';
+        var fullEmail = emailUser + '@' + emailDomain;
+        var subject = 'AI Skills Bootcamp - Registration Interest';
+        var mailtoLink = 'mail' + 'to:' + fullEmail + '?subject=' + encodeURIComponent(subject);
+        
+        // Set email text
+        document.getElementById('emailText').textContent = fullEmail;
+        
+        // Add click handlers to all enrollment buttons
+        var enrollButtons = ['navEnroll', 'heroEnroll', 'reserveSpot', 'registerInterest', 'emailLink'];
+        enrollButtons.forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) {
+                el.style.cursor = 'pointer';
+                el.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.location.href = mailtoLink;
+                });
+            }
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                var target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
