@@ -748,6 +748,117 @@
             justify-content: center;
             gap: 1rem;
         }
+        /* Roadmap Section */
+        .roadmap-section {
+            padding: 5rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        .roadmap-container {
+            position: relative;
+            min-width: 1000px;
+            padding: 2rem 0;
+            overflow-x: auto;
+        }
+        .roadmap-path {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            height: 280px;
+            padding: 0 20px;
+        }
+        /* Connecting line behind circles */
+        .roadmap-path::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 40px;
+            right: 40px;
+            height: 4px;
+            background: linear-gradient(90deg, #ff00aa, #8b5cf6, #00f5ff);
+            border-radius: 2px;
+            z-index: 1;
+        }
+        .roadmap-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            flex: 1;
+            z-index: 2;
+        }
+        .roadmap-step.up {
+            align-self: flex-start;
+            padding-top: 20px;
+        }
+        .roadmap-step.down {
+            align-self: flex-end;
+            padding-bottom: 20px;
+        }
+        .roadmap-number {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: white;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+            border: 3px solid rgba(255,255,255,0.3);
+        }
+        .roadmap-step:nth-child(1) .roadmap-number { background: #ff00aa; box-shadow: 0 0 30px rgba(255, 0, 170, 0.6); }
+        .roadmap-step:nth-child(2) .roadmap-number { background: linear-gradient(135deg, #ff00aa, #8b5cf6); }
+        .roadmap-step:nth-child(3) .roadmap-number { background: #8b5cf6; }
+        .roadmap-step:nth-child(4) .roadmap-number { background: linear-gradient(135deg, #8b5cf6, #00c8ff); }
+        .roadmap-step:nth-child(5) .roadmap-number { background: #00c8ff; }
+        .roadmap-step:nth-child(6) .roadmap-number { background: linear-gradient(135deg, #00c8ff, #00f5ff); }
+        .roadmap-step:nth-child(7) .roadmap-number { background: #00f5ff; box-shadow: 0 0 30px rgba(0, 245, 255, 0.6); }
+        .roadmap-label {
+            text-align: center;
+            margin-top: 1rem;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.4;
+            max-width: 120px;
+        }
+        .roadmap-step.up .roadmap-label {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            order: -1;
+        }
+        .roadmap-step:hover .roadmap-number {
+            transform: scale(1.15);
+        }
+        .roadmap-cta {
+            text-align: center;
+            margin-top: 2rem;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--accent-magenta);
+            text-shadow: 0 0 20px rgba(255, 0, 170, 0.3);
+        }
+        .roadmap-benefit {
+            text-align: center;
+            max-width: 800px;
+            margin: 1.5rem auto 0;
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+        .roadmap-benefit strong {
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
         footer {
             padding: 2rem 5%;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
@@ -897,60 +1008,95 @@
             <div class="learn-item">
                 <div class="learn-number">01</div>
                 <div class="learn-content">
-                    <h4>Data Cleaning & Preparation</h4>
-                    <p>Use AI for data cleaning, prep, and synthetic data creation</p>
+                    <h4>AI Landscape & Prompt Engineering</h4>
+                    <p>Master the fundamentals of AI and essential prompting techniques for MR</p>
                 </div>
             </div>
             <div class="learn-item">
                 <div class="learn-number">02</div>
                 <div class="learn-content">
-                    <h4>Fraud Detection</h4>
-                    <p>Detect and manage fraudulent or low-quality responses using AI-driven checks</p>
+                    <h4>Advanced Prompt Engineering</h4>
+                    <p>Deep dive into advanced prompting strategies for complex research tasks</p>
                 </div>
             </div>
             <div class="learn-item">
                 <div class="learn-number">03</div>
                 <div class="learn-content">
-                    <h4>Open-End Analysis</h4>
-                    <p>Analyze qualitative data using AI for themes, sentiment, and insights</p>
+                    <h4>Building Custom GPTs</h4>
+                    <p>Create your own specialized AI assistants for research workflows</p>
                 </div>
             </div>
             <div class="learn-item">
                 <div class="learn-number">04</div>
                 <div class="learn-content">
-                    <h4>Quantitative Analysis</h4>
-                    <p>Conduct statistical analysis with intelligent AI assistance</p>
+                    <h4>Fraud Detection & Open-End Analysis</h4>
+                    <p>Detect low-quality responses and analyze qualitative data at scale</p>
                 </div>
             </div>
             <div class="learn-item">
                 <div class="learn-number">05</div>
                 <div class="learn-content">
-                    <h4>Build AI Apps</h4>
-                    <p>Create ChatGPT-powered apps and dashboards without heavy coding</p>
+                    <h4>Qual & Quant Workflows</h4>
+                    <p>End-to-end AI-powered workflows for qualitative and quantitative research</p>
                 </div>
             </div>
             <div class="learn-item">
-                <div class="learn-number">06</div>
+                <div class="learn-number">06-07</div>
                 <div class="learn-content">
-                    <h4>Prompt Engineering</h4>
-                    <p>Master prompting techniques specifically for market research use cases</p>
-                </div>
-            </div>
-            <div class="learn-item">
-                <div class="learn-number">07</div>
-                <div class="learn-content">
-                    <h4>AI Storytelling</h4>
-                    <p>Convert analysis into client-ready stories and executive summaries</p>
+                    <h4>Build AI-Powered Apps</h4>
+                    <p>Create powerful research tools and dashboards without heavy coding</p>
                 </div>
             </div>
             <div class="learn-item">
                 <div class="learn-number">08</div>
                 <div class="learn-content">
-                    <h4>Use AI to Build Presentations</h4>
-                    <p>Create stunning presentations using AI in minutes. No more spending hours adjusting font sizes and colors.</p>
+                    <h4>Storytelling & Insights Generation</h4>
+                    <p>Transform data into compelling narratives and client-ready reports</p>
                 </div>
             </div>
         </div>
+    </section>
+
+    <!-- Roadmap Section -->
+    <section class="roadmap-section" id="roadmap">
+        <div class="section-header">
+            <span class="section-tag">Your Journey</span>
+            <h2 class="section-title">The Roadmap: Your AI Journey</h2>
+        </div>
+        <div class="roadmap-container">
+            <div class="roadmap-path">
+                <div class="roadmap-step down">
+                    <div class="roadmap-number">1</div>
+                    <div class="roadmap-label">AI Landscape<br>& Basics</div>
+                </div>
+                <div class="roadmap-step up">
+                    <div class="roadmap-label">Advanced<br>Prompting</div>
+                    <div class="roadmap-number">2</div>
+                </div>
+                <div class="roadmap-step down">
+                    <div class="roadmap-number">3</div>
+                    <div class="roadmap-label">Custom<br>GPTs</div>
+                </div>
+                <div class="roadmap-step up">
+                    <div class="roadmap-label">Fraud & Open-End<br>Analysis</div>
+                    <div class="roadmap-number">4</div>
+                </div>
+                <div class="roadmap-step down">
+                    <div class="roadmap-number">5</div>
+                    <div class="roadmap-label">Qual & Quant<br>Workflows</div>
+                </div>
+                <div class="roadmap-step up">
+                    <div class="roadmap-label">Build AI<br>Apps</div>
+                    <div class="roadmap-number">6-7</div>
+                </div>
+                <div class="roadmap-step down">
+                    <div class="roadmap-number">8</div>
+                    <div class="roadmap-label">Storytelling<br>& Reports</div>
+                </div>
+            </div>
+        </div>
+        <div class="roadmap-cta">✨ What Do You Want To Build?</div>
+        <p class="roadmap-benefit">This isn't a typical classroom session — it's <strong>hands-on training</strong> where you'll build real tools, not just watch demos. Walk away with the confidence to create AI-powered apps, your own prompt repository, and the ability to offer clients cost-effective AI solutions that set you apart.</p>
     </section>
 
     <section id="structure">
@@ -1163,7 +1309,7 @@
     <footer>
         <div class="footer-brand"><span>insights3D</span></div>
         <p class="footer-tagline">Data-Driven. Digital. Decoded by AI.</p>
-        <p class="footer-copy">© 2026 insights3D. All rights reserved.</p>
+        <p class="footer-copy">© 2025 insights3D. All rights reserved.</p>
     </footer>
 
     <script>
