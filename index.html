@@ -629,6 +629,115 @@
             line-height: 1.8;
             text-align: left;
         }
+        /* Testimonials Section */
+        .testimonials-section {
+            padding: 5rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        .testimonials-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .testimonials-track-wrapper {
+            position: relative;
+            overflow: hidden;
+            margin: 0 -5%;
+            padding: 0 5%;
+        }
+        .testimonials-track-wrapper::before,
+        .testimonials-track-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100px;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .testimonials-track-wrapper::before {
+            left: 0;
+            background: linear-gradient(90deg, var(--bg-dark) 0%, transparent 100%);
+        }
+        .testimonials-track-wrapper::after {
+            right: 0;
+            background: linear-gradient(-90deg, var(--bg-dark) 0%, transparent 100%);
+        }
+        .testimonials-track {
+            display: flex;
+            gap: 2rem;
+            animation: scroll-testimonials 35s linear infinite;
+            width: max-content;
+        }
+        .testimonials-track:hover {
+            animation-play-state: paused;
+        }
+        @keyframes scroll-testimonials {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .testimonial-card {
+            flex: 0 0 420px;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 2rem;
+            position: relative;
+            transition: all 0.4s ease;
+        }
+        .testimonial-card:hover {
+            background: var(--gradient-card);
+            border-color: rgba(0, 245, 255, 0.3);
+            transform: translateY(-5px);
+        }
+        .testimonial-quote-icon {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 3rem;
+            color: rgba(0, 245, 255, 0.15);
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+        .testimonial-content {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .testimonial-avatar {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-main);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--bg-dark);
+        }
+        .testimonial-info h4 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+        .testimonial-info p {
+            font-size: 0.9rem;
+            color: var(--accent-cyan);
+        }
         /* Pricing Section */
         .pricing-section {
             padding: 4rem 5%;
@@ -1222,6 +1331,111 @@
                     <div>
                         <h4>Future-Proof Your Career</h4>
                         <p>Stay relevant in an AI-driven research environment</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section" id="testimonials">
+        <div class="testimonials-header">
+            <span class="section-tag">What Participants Say</span>
+            <h2 class="section-title">Trusted by MR Professionals</h2>
+        </div>
+        <div class="testimonials-track-wrapper">
+            <div class="testimonials-track">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card">
+                    <span class="testimonial-quote-icon">"</span>
+                    <p class="testimonial-content">Aneesh's introductory session on AI was simply brilliant! To beginners starting to experiment with AI or even for those who have experienced its benefits, it was a structured and in-depth discussion on how to leverage AI's untapped potential. Just like a powerful race car needs a highly disciplined and skilled driver, so it is with AI. The better you know how to steer it, the easier it will be to reach your destination quickly and safely.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">VW</div>
+                        <div class="testimonial-info">
+                            <h4>Vivek Wagle</h4>
+                            <p>Consumer Insights Specialist & Author, India</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card">
+                    <span class="testimonial-quote-icon">"</span>
+                    <p class="testimonial-content">Aneesh Laiwala's AI Market Research sessions are game-changing, doing the entire questionnaire-to-analysis-to-insights AI workflow at great speed with excellent accuracy. The session helped me understand why mastering prompt engineering is critical & it is not that complex as it sounds!</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">NK</div>
+                        <div class="testimonial-info">
+                            <h4>Narayanan Kannan</h4>
+                            <p>Consultant, Data Analytics & BI, India</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card">
+                    <span class="testimonial-quote-icon">"</span>
+                    <p class="testimonial-content">Outstanding session! Much detailed and insightful! The practical approach to integrating AI into market research workflows was exactly what I needed to take my skills to the next level.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">SC</div>
+                        <div class="testimonial-info">
+                            <h4>Senior Consultant</h4>
+                            <p>United States</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testimonial 4 -->
+                <div class="testimonial-card">
+                    <span class="testimonial-quote-icon">"</span>
+                    <p class="testimonial-content">Excellent and well-prepared session! Thank you! The structured approach to AI in market research was eye-opening and immediately applicable to our daily work.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">FR</div>
+                        <div class="testimonial-info">
+                            <h4>Founder</h4>
+                            <p>Boutique Research Company, UAE</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Duplicate cards for seamless loop -->
+                <div class="testimonial-card">
+                    <span class="testimonial-quote-icon">"</span>
+                    <p class="testimonial-content">Aneesh's introductory session on AI was simply brilliant! To beginners starting to experiment with AI or even for those who have experienced its benefits, it was a structured and in-depth discussion on how to leverage AI's untapped potential. Just like a powerful race car needs a highly disciplined and skilled driver, so it is with AI. The better you know how to steer it, the easier it will be to reach your destination quickly and safely.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">VW</div>
+                        <div class="testimonial-info">
+                            <h4>Vivek Wagle</h4>
+                            <p>Consumer Insights Specialist & Author, India</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <span class="testimonial-quote-icon">"</span>
+                    <p class="testimonial-content">Aneesh Laiwala's AI Market Research sessions are game-changing, doing the entire questionnaire-to-analysis-to-insights AI workflow at great speed with excellent accuracy. The session helped me understand why mastering prompt engineering is critical & it is not that complex as it sounds!</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">NK</div>
+                        <div class="testimonial-info">
+                            <h4>Narayanan Kannan</h4>
+                            <p>Consultant, Data Analytics & BI, India</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <span class="testimonial-quote-icon">"</span>
+                    <p class="testimonial-content">Outstanding session! Much detailed and insightful! The practical approach to integrating AI into market research workflows was exactly what I needed to take my skills to the next level.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">SC</div>
+                        <div class="testimonial-info">
+                            <h4>Senior Consultant</h4>
+                            <p>United States</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <span class="testimonial-quote-icon">"</span>
+                    <p class="testimonial-content">Excellent and well-prepared session! Thank you! The structured approach to AI in market research was eye-opening and immediately applicable to our daily work.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">FR</div>
+                        <div class="testimonial-info">
+                            <h4>Founder</h4>
+                            <p>Boutique Research Company, UAE</p>
+                        </div>
                     </div>
                 </div>
             </div>
